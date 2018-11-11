@@ -1,5 +1,6 @@
 #include <sstream>
 
+#include "FileElementFactory.h"
 #include "TerminalManager.h"
 #include "Directory.h"
 #include "RootDirectory.h"
@@ -7,7 +8,13 @@
 TerminalManager::TerminalManager(Printer &printer) :
     m_printer(printer)
 {
-    m_currentDirectory = new RootDirectory();
+    m_currentDirectory = new RootDirectory("~/game");
+}
+
+TerminalManager::TerminalManager(Printer &printer, const std::string &fileName) :
+    m_printer(printer)
+{
+    m_currentDirectory = FileElementFactory::readObject(fileName);
 }
 
 TerminalManager::~TerminalManager()

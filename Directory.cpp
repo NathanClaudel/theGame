@@ -1,6 +1,7 @@
 #include <sstream>
 
 #include "Directory.h"
+#include "FileElementFactory.h"
 
 Directory::Directory(DirectoryPtr parent, const std::string name) :
     FileElement (parent, name),
@@ -28,6 +29,11 @@ void Directory::outAction(Printer &)
 
 }
 
+void Directory::catAction(Printer &out)
+{
+    out.println("cat: " + name() + ": Is a directory");
+}
+
 void Directory::lsElements(Printer &out)
 {
     _debug("lsAction");
@@ -52,6 +58,11 @@ void Directory::rmElement(Printer &out, const std::string &name, const std::stri
             _remove(element->name());
         }
     }
+}
+
+void Directory::catElement(Printer &, const std::string )
+{
+
 }
 
 DirectoryPtr Directory::cdElement(Printer &out, const std::string name)
@@ -158,6 +169,34 @@ void Directory::pwdAction(Printer &out)
     out.println(path());
 }
 
+void Directory::writeObject(std::ofstream &out)
+{
+    FileElement::writeObject(out);
+
+    for(auto it = m_elements.begin(); it != m_elements.end(); it ++)
+    {
+        it->second->writeObject(out);
+    }
+    out << "#" << std::endl;
+}
+
+DirectoryPtr Directory::readObject(std::ifstream &in, DirectoryPtr parent)
+{
+    std::string name;
+    std::getline(in, name);
+
+    DirectoryPtr directory = new Directory(parent, name);
+    FileElementPtr element;
+    do
+    {
+        element = FileElementFactory::readObject(in, directory);
+        directory->_add(element);
+    }
+    while(element != nullptr);
+
+    return directory;
+}
+
 void Directory::_remove(const std::string name)
 {
     {
@@ -175,6 +214,18 @@ void Directory::_remove(const std::string name)
             m_directories.erase(it);
         }
     }
+}
+
+void Directory::_add(FileElementPtr element)
+{
+    m_elements[element->name()] = element;
+    _add(dynamic_cast<DirectoryPtr>(element));
+}
+
+void Directory::_add(DirectoryPtr directory)
+{
+    if(directory != nullptr)
+        m_directories[directory->name()] = directory;
 }
 
 FileElementPtr Directory::_find(const std::string name)

@@ -18,17 +18,24 @@ public:
     virtual void entryAction(Printer &out);
     virtual void outAction(Printer &out);
 
+    virtual void catAction(Printer &out) override;
     virtual void rmAction(Printer &out) override;
     virtual int isRemovable(Printer &out, const std::string &arg) override;
 
     // Directory specific actions
     virtual void lsElements(Printer &out);
     virtual void rmElement(Printer &out, const std::string &name, const std::string args);
+    virtual void catElement(Printer &out, const std::string name);
     virtual void mkdirAction(Printer &out, const std::string &name);
     virtual void pwdAction(Printer &out);
 
+    virtual void writeObject(std::ofstream &out) override;
+    static DirectoryPtr readObject(std::ifstream &in, DirectoryPtr parent);
+
 protected:
     void _remove(const std::string name);
+    void _add(FileElementPtr element);
+    void _add(DirectoryPtr directory);
     FileElementPtr _find(const std::string name);
     DirectoryPtr _findDirectory(const std::string name);
 

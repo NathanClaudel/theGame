@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     printer.println(Printer::SLOW, Printer::RED, "FAILURE");
     printer.println(Printer::QUICK, Printer::RED, "Please open the UI manually "
                                           "using the command line interface.\n");
-    TerminalManager manager(printer);
+    TerminalManager manager(printer, "file");
     std::string command;
 
     while(1)

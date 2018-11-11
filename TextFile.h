@@ -11,6 +11,14 @@ public:
              const std::string &name,
              const std::string &content);
 
+    virtual void catAction(Printer &out) override;
+
+    virtual void writeObject(std::ofstream &out) override;
+    static FileElementPtr readObject(std::ifstream &in, DirectoryPtr parent);
+
+protected:
+    std::string _className() override;
+
 private:
     std::string m_content;
 };

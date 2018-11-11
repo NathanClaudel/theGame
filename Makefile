@@ -1,5 +1,5 @@
 EXE  = game
-SOURCES = main.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp RootDirectory.cpp Printer.cpp
+SOURCES = main.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp RootDirectory.cpp Printer.cpp FileElementFactory.cpp TextFile.cpp
 OBJS = $(subst .cpp,.o,$(SOURCES))
 CC = g++
 

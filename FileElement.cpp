@@ -36,9 +36,28 @@ void FileElement::rmAction(Printer &)
 
 }
 
+void FileElement::catAction(Printer &)
+{
+
+}
+
 int FileElement::isRemovable(Printer &, const std::string &)
 {
     return 1;
+}
+
+void FileElement::writeObject(std::ofstream &out)
+{
+    out << _className() << std::endl;
+    out << name() << std::endl;
+}
+
+FileElementPtr FileElement::readObject(std::ifstream &in, DirectoryPtr parent)
+{
+    std::string name;
+    std::getline(in, name);
+
+    return new FileElement(parent, name);
 }
 
 #ifdef DEBUG

@@ -8,6 +8,7 @@ class TerminalManager
 {
 public:
     TerminalManager(Printer &printer);
+    TerminalManager(Printer &printer, const std::string &fileName);
     virtual ~TerminalManager();
 
     std::string information();
