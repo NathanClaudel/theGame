@@ -1,6 +1,6 @@
 EXE  = game
-SOURCES = main.cpp bePolite.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp
-OBJS = main.o bePolite.o Politeness.o TerminalManager.o FileElement.o Directory.o
+SOURCES = main.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp RootDirectory.cpp Printer.cpp
+OBJS = $(subst .cpp,.o,$(SOURCES))
 CC = g++
 
 CPPFLAGS = -O2 -g -Wall -Wextra -Werror
