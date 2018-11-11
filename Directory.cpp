@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "Directory.h"
 
 Directory::Directory(DirectoryPtr parent, const std::string name) :
@@ -16,34 +18,32 @@ Directory::~Directory()
     }
 }
 
-void Directory::entryAction(std::ostream &)
+void Directory::entryAction(Printer &)
 {
 
 }
 
-void Directory::outAction(std::ostream &)
+void Directory::outAction(Printer &)
 {
 
 }
 
-void Directory::lsElements(std::ostream &out)
+void Directory::lsElements(Printer &out)
 {
     _debug("lsAction");
 
     for(auto it = m_elements.begin(); it != m_elements.end(); it ++)
     {
         it->second->lsAction(out);
-        out << std::endl;
     }
 }
 
-void Directory::rmElement(std::ostream &out, const std::string &name, const std::string args)
+void Directory::rmElement(Printer &out, const std::string &name, const std::string args)
 {
     FileElementPtr element = _find(name);
     if(element == nullptr)
     {
-        out << "rm: cannot remove '" << name << "': No such file or directory"
-            << std::endl;
+        out.println("rm: cannot remove '" + name + "': No such file or directory");
     }
     else
     {
@@ -54,7 +54,7 @@ void Directory::rmElement(std::ostream &out, const std::string &name, const std:
     }
 }
 
-DirectoryPtr Directory::cdElement(std::ostream &out, const std::string name)
+DirectoryPtr Directory::cdElement(Printer &out, const std::string name)
 {
     if(name == "..")
     {
@@ -64,7 +64,7 @@ DirectoryPtr Directory::cdElement(std::ostream &out, const std::string name)
     DirectoryPtr directory = _findDirectory(name);
     if(directory == nullptr)
     {
-        out << "cd: " << name << ": No such file or directory";
+        out.println("cd: " + name + ": No such file or directory");
         return this;
     }
     else
@@ -74,7 +74,7 @@ DirectoryPtr Directory::cdElement(std::ostream &out, const std::string name)
     }
 }
 
-void Directory::rmAction(std::ostream &out)
+void Directory::rmAction(Printer &out)
 {
     _debug("rmAction");
 
@@ -85,7 +85,7 @@ void Directory::rmAction(std::ostream &out)
     }
 }
 
-int Directory::isRemovable(std::ostream &out, const std::string &arg)
+int Directory::isRemovable(Printer &out, const std::string &arg)
 {
     _debug("isRemovable");
 
@@ -100,12 +100,42 @@ int Directory::isRemovable(std::ostream &out, const std::string &arg)
     }
     else
     {
-        out << "rm: cannot remove 'truc': Is a directory" << std::endl;
+        out.println("rm: cannot remove 'truc': Is a directory");
         return 0;
     }
 }
 
-void Directory::mkdirAction(std::ostream &out, const std::string &name)
+void Directory::executeCommand(Printer &out, const std::string &command)
+{
+    std::stringstream ss(command);
+    std::string token;
+
+    std::getline(ss, token, ' ');
+    if(token == "ls")
+    {
+        lsElements(out);
+    }
+    else if(token == "mkdir")
+    {
+        while(std::getline(ss, token, ' '))
+            mkdirAction(out, token);
+    }
+    else if(token == "rm")
+    {
+        while(std::getline(ss, token, ' '))
+            rmElement(out, token, "-r");
+    }
+    else if(token == "pwd")
+    {
+        pwdAction(out);
+    }
+    else
+    {
+        out.println("Unknown command " + token);
+    }
+}
+
+void Directory::mkdirAction(Printer &out, const std::string &name)
 {
     _debug("mkdirAction " + name);
 
@@ -119,8 +149,13 @@ void Directory::mkdirAction(std::ostream &out, const std::string &name)
     }
     else
     {
-        out << "mkdir: cannot create directory ‘" + name + "’: File exists" << std::endl;
+        out.println("mkdir: cannot create directory ‘" + name + "’: File exists");
     }
+}
+
+void Directory::pwdAction(Printer &out)
+{
+    out.println(path());
 }
 
 void Directory::_remove(const std::string name)

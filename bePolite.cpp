@@ -6,7 +6,7 @@
 
 int main()
 {
-    Politeness::bePolite(std::cout);
+    Politeness::bePolite(*new Printer(std::cout));
 }
 
 #endif

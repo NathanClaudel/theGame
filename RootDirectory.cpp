@@ -1,7 +1,7 @@
 #include "RootDirectory.h"
 
 RootDirectory::RootDirectory() :
-    Directory (nullptr, "~/game")
+    Directory(nullptr, "~/game")
 {
 
 }
@@ -11,8 +11,8 @@ RootDirectory::~RootDirectory()
 
 }
 
-void RootDirectory::outAction(std::ostream &out)
+void RootDirectory::outAction(Printer &out)
 {
-    out << "Where do you think you're going ?";
+    out.println(Printer::MEDIUM, "Where do you think you are going ?");
 }
 

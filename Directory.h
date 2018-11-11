@@ -12,17 +12,20 @@ public:
     Directory(DirectoryPtr parent, const std::string name);
     virtual ~Directory() override;
 
-    virtual void entryAction(std::ostream &out);
-    virtual void outAction(std::ostream &out);
+    virtual DirectoryPtr cdElement(Printer &out, const std::string name);
+    virtual void executeCommand(Printer &out, const std::string &command);
 
-    virtual void rmAction(std::ostream &out) override;
-    virtual int isRemovable(std::ostream &out, const std::string &arg) override;
+    virtual void entryAction(Printer &out);
+    virtual void outAction(Printer &out);
+
+    virtual void rmAction(Printer &out) override;
+    virtual int isRemovable(Printer &out, const std::string &arg) override;
 
     // Directory specific actions
-    virtual void lsElements(std::ostream &out);
-    virtual void rmElement(std::ostream &out, const std::string &name, const std::string args);
-    virtual DirectoryPtr cdElement(std::ostream &out, const std::string name);
-    virtual void mkdirAction(std::ostream &out, const std::string &name);
+    virtual void lsElements(Printer &out);
+    virtual void rmElement(Printer &out, const std::string &name, const std::string args);
+    virtual void mkdirAction(Printer &out, const std::string &name);
+    virtual void pwdAction(Printer &out);
 
 protected:
     void _remove(const std::string name);

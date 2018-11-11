@@ -1,13 +1,13 @@
 #ifndef POLITENESS_H
 #define POLITENESS_H
 
-#include <iostream>
+#include "Printer.h"
 
 class Politeness
 {
     public:
-        static void bePolite(std::ostream &out);
-        static void politeTest(int argc, char* argv[], std::ostream &out);
+        static void bePolite(Printer &out);
+        static void politeTest(int argc, char* argv[], Printer &out);
 };
 
 #endif // POLITENESS_H

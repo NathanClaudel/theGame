@@ -20,23 +20,23 @@ const std::string &FileElement::path()
     FileElementPtr element = this;
     while(element != nullptr)
     {
-        *path = "/" + name() + *path;
         element = element->parent();
+        *path = (element == nullptr ? "" : "/") + name() + *path;
     }
     return *path;
 }
 
-void FileElement::lsAction(std::ostream &out)
+void FileElement::lsAction(Printer &out)
 {
-    out << m_name;
+    out.println(m_name);
 }
 
-void FileElement::rmAction(std::ostream &)
+void FileElement::rmAction(Printer &)
 {
 
 }
 
-int FileElement::isRemovable(std::ostream &, const std::string &)
+int FileElement::isRemovable(Printer &, const std::string &)
 {
     return 1;
 }

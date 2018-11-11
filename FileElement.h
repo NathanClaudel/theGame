@@ -2,8 +2,8 @@
 #define FILEELEMENT_H
 
 #include <string>
-#include <iostream>
 
+#include "Printer.h"
 #include "PtrDefinition.h"
 
 class FileElement
@@ -16,10 +16,10 @@ public:
     virtual const std::string &path();
     virtual DirectoryPtr parent() {return m_parent;}
 
-    virtual void lsAction(std::ostream &out);
-    virtual void rmAction(std::ostream &);
+    virtual void lsAction(Printer &out);
+    virtual void rmAction(Printer &);
 
-    virtual int isRemovable(std::ostream &out, const std::string &arg);
+    virtual int isRemovable(Printer &out, const std::string &arg);
 
 protected:
     virtual void _debug(const std::string &message);

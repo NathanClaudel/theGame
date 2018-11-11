@@ -7,8 +7,10 @@ class RootDirectory : public Directory
 {
 public:
     RootDirectory();
+    virtual ~RootDirectory() override;
 
-    virtual void outAction(std::ostream &out) override;
+protected:
+    virtual void outAction(Printer &out) override;
 };
 
 #endif // ROOTDIRECTORY_H

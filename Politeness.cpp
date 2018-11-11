@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-void Politeness::bePolite(std::ostream &out)
+void Politeness::bePolite(Printer &out)
 {
     std::vector<std::string> unpoliteAnswers = {"Try again when you're polite.",
                                                 "So rude.",
@@ -12,16 +12,16 @@ void Politeness::bePolite(std::ostream &out)
                                                 "No way. I won't run.",
                                                 "Who raised you like that ?"};
     srand(static_cast<unsigned int>(clock()));
-    out << "\n\033[1;31m"
-        << unpoliteAnswers.at(static_cast<unsigned int>(rand()) % unpoliteAnswers.size())
-        << "\033[0m\n\n";
+    out.println(Printer::MEDIUM, Printer::RED,
+                unpoliteAnswers.at(static_cast<unsigned int>(rand()) % unpoliteAnswers.size()));
 }
 
-void Politeness::politeTest(int argc, char* argv[], std::ostream &out)
+void Politeness::politeTest(int argc, char* argv[], Printer &out)
 {
     if(argc > 2)
     {
-        std::cout << "You're asking too much." << std::endl;
+        out.println(10000, Printer::RED,
+                    "You're trying too hard.");
         exit(-1);
     }
 

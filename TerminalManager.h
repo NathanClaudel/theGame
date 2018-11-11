@@ -1,21 +1,22 @@
 #ifndef TERMINALMANAGER_H
 #define TERMINALMANAGER_H
 
+#include "Printer.h"
 #include "PtrDefinition.h"
 
 class TerminalManager
 {
 public:
-    TerminalManager();
+    TerminalManager(Printer &printer);
     virtual ~TerminalManager();
 
     std::string information();
 
-    void processCommand(const std::string &command);
+    void executeCommand(const std::string &command);
 
 private:
-    std::ostream &m_out;
     DirectoryPtr m_currentDirectory;
+    Printer &m_printer;
 };
 
 #endif // TERMINALMANAGER_H
