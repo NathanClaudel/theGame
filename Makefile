@@ -1,5 +1,5 @@
 EXE  = game
-SOURCES = main.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp RootDirectory.cpp Printer.cpp FileElementFactory.cpp TextFile.cpp
+SOURCES = main.cpp Politeness.cpp TerminalManager.cpp FileElement.cpp Directory.cpp RootDirectory.cpp Printer.cpp FileElementFactory.cpp TextFile.cpp ProgramLauncher.cpp UiLauncher.cpp
 OBJS = $(subst .cpp,.o,$(SOURCES))
 CC = g++
 
@@ -17,6 +17,8 @@ please: $(EXE)
 
 debug: CPPFLAGS += -DDEBUG
 debug: please
+
+all: please
 
 clean:
 	rm -f $(OBJS) $(EXE) depend.d

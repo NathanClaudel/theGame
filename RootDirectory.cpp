@@ -27,7 +27,7 @@ DirectoryPtr RootDirectory::readObject(std::ifstream &in)
     do
     {
         element = FileElementFactory::readObject(in, directory);
-        directory->_add(element);
+        if(element != nullptr) directory->_add(element);
     }
     while(element != nullptr);
 

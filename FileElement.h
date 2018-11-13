@@ -20,6 +20,7 @@ public:
     virtual void lsAction(Printer &out);
     virtual void rmAction(Printer &);
     virtual void catAction(Printer &out);
+    virtual void executeAction(Printer &out);
 
     virtual int isRemovable(Printer &out, const std::string &arg);
 

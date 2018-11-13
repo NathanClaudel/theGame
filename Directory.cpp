@@ -60,9 +60,30 @@ void Directory::rmElement(Printer &out, const std::string &name, const std::stri
     }
 }
 
-void Directory::catElement(Printer &, const std::string )
+void Directory::catElement(Printer &out, const std::string name)
 {
+    FileElementPtr element = _find(name);
+    if(element == nullptr)
+    {
+        out.println("cat: " + name + ": No such file or directory");
+    }
+    else
+    {
+        element->catAction(out);
+    }
+}
 
+void Directory::executeElement(Printer &out, const std::string name)
+{
+    FileElementPtr element = _find(name);
+    if(element == nullptr)
+    {
+        out.println(name + ": No such file or directory");
+    }
+    else
+    {
+        element->executeAction(out);
+    }
 }
 
 DirectoryPtr Directory::cdElement(Printer &out, const std::string name)
@@ -140,6 +161,17 @@ void Directory::executeCommand(Printer &out, const std::string &command)
     {
         pwdAction(out);
     }
+    else if(token == "cat")
+    {
+        while(std::getline(ss, token, ' '))
+            catElement(out, token);
+    }
+    else if(token.rfind("./", 0) == 0)
+    {
+        _debug("Execute");
+        token = token.substr(2);
+        executeElement(out, token);
+    }
     else
     {
         out.println("Unknown command " + token);
@@ -190,7 +222,7 @@ DirectoryPtr Directory::readObject(std::ifstream &in, DirectoryPtr parent)
     do
     {
         element = FileElementFactory::readObject(in, directory);
-        directory->_add(element);
+        if(element != nullptr) directory->_add(element);
     }
     while(element != nullptr);
 

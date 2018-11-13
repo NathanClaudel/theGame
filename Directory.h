@@ -5,9 +5,12 @@
 #include <iostream>
 
 #include "FileElement.h"
+#include "UiLauncher.h"
 
 class Directory: public FileElement
 {
+    friend UiLauncher;
+
 public:
     Directory(DirectoryPtr parent, const std::string name);
     virtual ~Directory() override;
@@ -26,6 +29,8 @@ public:
     virtual void lsElements(Printer &out);
     virtual void rmElement(Printer &out, const std::string &name, const std::string args);
     virtual void catElement(Printer &out, const std::string name);
+    virtual void executeElement(Printer &out, const std::string name);
+
     virtual void mkdirAction(Printer &out, const std::string &name);
     virtual void pwdAction(Printer &out);
 

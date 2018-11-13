@@ -3,6 +3,8 @@
 #include "Directory.h"
 #include "RootDirectory.h"
 #include "TextFile.h"
+#include "ProgramLauncher.h"
+#include "UiLauncher.h"
 
 DirectoryPtr FileElementFactory::readObject(const std::string &fileName)
 {
@@ -23,6 +25,11 @@ DirectoryPtr FileElementFactory::readObject(const std::string &fileName)
 FileElementPtr FileElementFactory::readObject(std::ifstream &in,
                                               DirectoryPtr parent)
 {
+    if(in.eof())
+    {
+        return nullptr;
+    }
+
     std::string className;
     std::getline(in, className);
 
@@ -41,6 +48,14 @@ FileElementPtr FileElementFactory::readObject(std::ifstream &in,
     else if(className == "TextFile")
     {
         return TextFile::readObject(in, parent);
+    }
+    else if(className == "ProgramLauncher")
+    {
+        return ProgramLauncher::readObject(in, parent);
+    }
+    else if(className == "UiLauncher")
+    {
+        return UiLauncher::readObject(in, parent);
     }
 
     return nullptr;

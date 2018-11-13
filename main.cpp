@@ -13,11 +13,10 @@ void interruptHandler(int);
 Printer &printer = *new Printer(std::cout);
 
 #ifdef POLITE
-int main(int argc, char* argv[])
+int main()
 {
     signal(SIGINT, interruptHandler);
 
-    Politeness::politeTest(argc, argv, printer);
     printer.println(Printer::QUICK, "\nInitializing game...");
     printer.println(Printer::QUICK, "Loading world...");
     printer.print(Printer::MEDIUM, "[****************************]");
@@ -33,6 +32,7 @@ int main(int argc, char* argv[])
     printer.println(Printer::SLOW, Printer::RED, "FAILURE");
     printer.println(Printer::QUICK, Printer::RED, "Please open the UI manually "
                                           "using the command line interface.\n");
+
     TerminalManager manager(printer, "file");
     std::string command;
 

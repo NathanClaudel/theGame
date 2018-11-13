@@ -20,8 +20,9 @@ const std::string &FileElement::path()
     FileElementPtr element = this;
     while(element != nullptr)
     {
+        std::string name = element->name();
         element = element->parent();
-        *path = (element == nullptr ? "" : "/") + name() + *path;
+        *path = (element == nullptr ? "" : "/") + name + *path;
     }
     return *path;
 }
@@ -39,6 +40,11 @@ void FileElement::rmAction(Printer &)
 void FileElement::catAction(Printer &)
 {
 
+}
+
+void FileElement::executeAction(Printer &out)
+{
+    out.println(name() + " can not be executed.");
 }
 
 int FileElement::isRemovable(Printer &, const std::string &)
