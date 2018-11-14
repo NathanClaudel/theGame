@@ -251,13 +251,17 @@ void Directory::_remove(const std::string name)
 void Directory::_add(FileElementPtr element)
 {
     m_elements[element->name()] = element;
-    _add(dynamic_cast<DirectoryPtr>(element));
+    _addDirectory(dynamic_cast<DirectoryPtr>(element));
 }
 
-void Directory::_add(DirectoryPtr directory)
+void Directory::_addDirectory(DirectoryPtr directory)
 {
+    _debug("_add");
     if(directory != nullptr)
+    {
+        _debug("Adding to directory");
         m_directories[directory->name()] = directory;
+    }
 }
 
 FileElementPtr Directory::_find(const std::string name)

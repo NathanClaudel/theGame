@@ -15,6 +15,7 @@ Printer &printer = *new Printer(std::cout);
 #ifdef POLITE
 int main()
 {
+#ifndef DEBUG
     signal(SIGINT, interruptHandler);
 
     printer.println(Printer::QUICK, "\nInitializing game...");
@@ -32,6 +33,7 @@ int main()
     printer.println(Printer::SLOW, Printer::RED, "FAILURE");
     printer.println(Printer::QUICK, Printer::RED, "Please open the UI manually "
                                           "using the command line interface.\n");
+#endif
 
     TerminalManager manager(printer, "file");
     std::string command;

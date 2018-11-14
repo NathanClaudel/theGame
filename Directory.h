@@ -40,7 +40,7 @@ public:
 protected:
     void _remove(const std::string name);
     void _add(FileElementPtr element);
-    void _add(DirectoryPtr directory);
+    void _addDirectory(DirectoryPtr directory);
     FileElementPtr _find(const std::string name);
     DirectoryPtr _findDirectory(const std::string name);
 

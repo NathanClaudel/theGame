@@ -12,6 +12,7 @@ void UiLauncher::executeAction(Printer &out)
 {
     out.println(Printer::QUICK, Printer::GREEN, "LAUNCHING UI");
 
+#ifndef DEBUG
     ProgramLauncher::executeAction(out);
 
     out.println(Printer::MEDIUM, "Are you serious ?\n"
@@ -20,6 +21,8 @@ void UiLauncher::executeAction(Printer &out)
     out.println(Printer::VERY_SLOW, "WINDOWS ?");
     out.println(Printer::MEDIUM, "\nIt's linux here, and no one will come to hold "
                                  "your hand.");
+#endif
+
     parent()->_add(FileElementFactory::readObject("file2"));
     out.println(Printer::QUICK, Printer::YELLOW, "\nA new folder appeared.");
 }
