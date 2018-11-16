@@ -9,7 +9,7 @@
 class FileElementFactory
 {
 public:
-    static DirectoryPtr readObject(const std::string &fileName);
+    static DirectoryPtr readObject(const std::string &fileName, DirectoryPtr parent = nullptr);
     static FileElementPtr readObject(std::ifstream &in, DirectoryPtr parent);
 };
 

@@ -23,7 +23,7 @@ void UiLauncher::executeAction(Printer &out)
                                  "your hand.");
 #endif
 
-    parent()->_add(FileElementFactory::readObject("file2"));
+    parent()->_add(FileElementFactory::readObject("file2", parent()));
     out.println(Printer::QUICK, Printer::YELLOW, "\nA new folder appeared.");
 }
 

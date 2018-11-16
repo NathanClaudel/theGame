@@ -6,13 +6,13 @@
 #include "ProgramLauncher.h"
 #include "UiLauncher.h"
 
-DirectoryPtr FileElementFactory::readObject(const std::string &fileName)
+DirectoryPtr FileElementFactory::readObject(const std::string &fileName, DirectoryPtr parent)
 {
     std::ifstream in(fileName);
     DirectoryPtr dir = nullptr;
     if(in.is_open())
     {
-        dir = dynamic_cast<DirectoryPtr>(readObject(in, nullptr));
+        dir = dynamic_cast<DirectoryPtr>(readObject(in, parent));
     }
     else
     {
